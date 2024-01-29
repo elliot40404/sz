@@ -9,6 +9,16 @@ Because I am on windows and it is stupid
 ```console
 $ go get github.com/elliot40404/sz
 ```
+
+```console
+$ scoop install https://raw.githubusercontent.com/elliot40404/sz/master/sz.json
+```
+
+```console
+$ scoop bucket add elliot https://github.com/elliot40404/elliot
+$ scoop install elliot/sz
+```
+
 ## Usage
 
 ```console
