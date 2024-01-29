@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	VERSION = "0.1"
+	VERSION = "v0.1.0"
 	AUTHOR  = "Elliot40404"
 	DESC	= "Prints the size of a file in bytes, kilobytes, megabytes and gigabytes"
 )
