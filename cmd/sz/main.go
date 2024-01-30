@@ -6,34 +6,35 @@ import (
 )
 
 const (
-	VERSION = "v0.1.0"
-	AUTHOR  = "Elliot40404"
-	DESC	= "Prints the size of a file in bytes, kilobytes, megabytes and gigabytes"
+	Help = `
+	sz version v0.1.0
+	Prints the size of a file in bytes, kilobytes, megabytes and gigabytes
+	Author: Elliot40404
+	Usage: sz <file>
+	`
 )
 
 func main() {
 	if len(os.Args) != 2 {
-		fmt.Printf("sz version %s\n", VERSION)
-		fmt.Printf("%s\n", DESC)
-		fmt.Printf("Author: %s\n", AUTHOR)
-		fmt.Printf("Usage: sz <file>\n")
+		fmt.Println(Help)
 		os.Exit(1)
 	}
 	// check if the file exists
-	if _, err := os.Stat(os.Args[1]); os.IsNotExist(err) {
+	fi, err := os.Stat(os.Args[1])
+	if os.IsNotExist(err) {
 		fmt.Printf("File %s does not exist\n", os.Args[1])
 		os.Exit(1)
 	}
-	// print size of the file
-	fi, err := os.Stat(os.Args[1])
 	if err != nil {
 		fmt.Printf("Error: %s\n", err)
 		os.Exit(1)
 	}
 	size := fi.Size()
 	// print the size in bytes, kilobytes and megabytes, gigabytes
-	fmt.Printf("%d B  ", size)
-	fmt.Printf("%.2f KB  ", float64(size)/1024)
-	fmt.Printf("%.3f MB  ", float64(size)/1024/1024)
-	fmt.Printf("%.3f GB\n", float64(size)/1024/1024/1024)
+	fmt.Printf("%d B  %.2f KB  %.3f MB  %.3f GB\n",
+		size,
+		float64(size)/1024,
+		float64(size)/1024/1024,
+		float64(size)/1024/1024/1024,
+	)
 }
