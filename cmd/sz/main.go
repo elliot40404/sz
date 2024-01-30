@@ -7,34 +7,40 @@ import (
 
 const (
 	Help = `
-	sz version v0.1.0
-	Prints the size of a file in bytes, kilobytes, megabytes and gigabytes
-	Author: Elliot40404
-	Usage: sz <file>
-	`
+sz version v0.2.0
+Prints file sizes in bytes, kilobytes, megabytes and gigabytes
+Author: Elliot40404
+Usage: sz <file> <file> <file>
+`
 )
 
 func main() {
-	if len(os.Args) != 2 {
-		fmt.Println(Help)
+	if len(os.Args) < 2 {
+		fmt.Printf(Help)
 		os.Exit(1)
 	}
-	// check if the file exists
-	fi, err := os.Stat(os.Args[1])
+	files := os.Args[1:]
+	for _, file := range files {
+		printFileSize(file)
+	}
+}
+
+func printFileSize(path string) {
+	fi, err := os.Stat(path)
 	if os.IsNotExist(err) {
-		fmt.Printf("File %s does not exist\n", os.Args[1])
-		os.Exit(1)
+		fmt.Printf("File %s does not exist\n", path)
+		return
 	}
 	if err != nil {
-		fmt.Printf("Error: %s\n", err)
-		os.Exit(1)
+		fmt.Print("Something went wrong\n")
+		return
 	}
 	size := fi.Size()
-	// print the size in bytes, kilobytes and megabytes, gigabytes
-	fmt.Printf("%d B  %.2f KB  %.3f MB  %.3f GB\n",
+	fmt.Printf("%d B  %.2f KB  %.3f MB  %.3f GB %s\n",
 		size,
 		float64(size)/1024,
 		float64(size)/1024/1024,
 		float64(size)/1024/1024/1024,
+		fi.Name(),
 	)
 }
