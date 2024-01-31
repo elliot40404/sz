@@ -8,7 +8,7 @@ import (
 const (
 	Help = `
 sz version v0.2.0
-Prints file sizes in bytes, kilobytes, megabytes and gigabytes
+Prints file sizes in bytes, kilobytes, megabytes, and gigabytes
 Author: Elliot40404
 Usage: sz <file> <file> <file>
 `
@@ -19,8 +19,8 @@ func main() {
 		fmt.Printf(Help)
 		os.Exit(1)
 	}
-	files := os.Args[1:]
-	for _, file := range files {
+
+	for _, file := range os.Args[1:] {
 		printFileSize(file)
 	}
 }
@@ -36,11 +36,14 @@ func printFileSize(path string) {
 		return
 	}
 	size := fi.Size()
+	sizeKb := float64(size) / 1024
+	sizeMb := sizeKb / 1024
+	sizeGb := sizeMb / 1024
 	fmt.Printf("%d B  %.2f KB  %.3f MB  %.3f GB %s\n",
 		size,
-		float64(size)/1024,
-		float64(size)/1024/1024,
-		float64(size)/1024/1024/1024,
+		sizeKb,
+		sizeMb,
+		sizeGb,
 		fi.Name(),
 	)
 }
